@@ -83,7 +83,7 @@ module.exports.startLiveChatProcess = async videoId => {
     await browserProcess.close();
   }
     const browser = await puppeteer.launch({});
-    console.log('cool')
+    console.log('cool', browser)
   browserProcess = browser;
     const page = await browser.newPage();
     currentPage = page;
