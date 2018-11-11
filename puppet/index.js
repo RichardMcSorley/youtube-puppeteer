@@ -127,6 +127,6 @@ module.exports.getScreenshot = async () => {
 module.exports.getHTML = async () => {
     if (browserProcess && currentPage) {
         const page = currentPage;
-        return await page.evaluate(() => document.body.innerHTML);
+        return await page.content();
     }
 }
