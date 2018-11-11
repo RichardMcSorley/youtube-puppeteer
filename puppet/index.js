@@ -72,12 +72,14 @@ const LoginWhileHere = async (page)=>{
     console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
     await page.type('input[type="email"]', process.env.GOOGLE_USER );
     await page.keyboard.press("Enter"); 
+    console.log('email')
     // await page.evaluate(() => { 
     //     debugger;
     // })
     await page.waitForSelector('input[type="password"]', { visible: true });
     await page.type('input[type="password"]', process.env.GOOGLE_PWD);
     await page.keyboard.press("Enter"); 
+    console.log('password')
 }
 
 module.exports.processLiveChat = processLiveChat;
