@@ -100,10 +100,13 @@ module.exports.startLiveChatProcess = async videoId => {
 };
 module.exports.sendMessage = async msg => {
     if (browserProcess && currentPage) {
+        console.log('im in')
         const page = currentPage;
         await page.waitForSelector("#input");
+        console.log('i see input')
         await page.type("#input", msg);
         await page.keyboard.press("Enter"); 
+        console.log('i pressed enter')
         return page.screenshot()
     }
 }
