@@ -38,7 +38,7 @@ module.exports = (server, options) => {
     method: "GET",
     path: "/screenshot",
     handler: async (request, h) => {
-      const screenshot = await puppet.getScreenshot(msg);
+      const screenshot = await puppet.getScreenshot();
       return h
         .response(screenshot)
         .header("Content-Disposition", "inline")
