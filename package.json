@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "restart": "git pull origin master && sudo reboot"
+    "restart": "git pull origin master && npm install && sudo reboot"
   },
   "keywords": [],
   "author": "",
