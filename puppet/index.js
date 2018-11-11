@@ -103,6 +103,8 @@ module.exports.sendMessage = async msg => {
     if (browserProcess && currentPage) {
         console.log('im in')
         const page = currentPage;
+        let bodyHTML = await page.evaluate(() => document.body.innerHTML);
+        console.log(bodyHTML)
         await page.waitForSelector("#input");
         console.log('i see input')
         await page.type("#input", msg);
