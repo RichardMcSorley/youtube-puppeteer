@@ -1,5 +1,5 @@
 "use strict";
-if(process.env.NODE_ENV !== 'production'){require('dotenv').config();}
+require('dotenv').config();
 const Hapi = require("hapi");
 const server = Hapi.server({
   port: process.env.PORT ? process.env.port : 3000,
