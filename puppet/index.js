@@ -89,7 +89,7 @@ module.exports.startLiveChatProcess = async videoId => {
     await browserProcess.close();
   }
     const browser = await puppeteer.launch({
-        userDataDir: "data",devtools: false,args: ['--no-sandbox', '--disable-setuid-sandbox']});
+        userDataDir: "data1",devtools: false,args: ['--no-sandbox', '--disable-setuid-sandbox']});
     console.log('cool')
   browserProcess = browser;
      const page = (await browser.pages())[0];
