@@ -2,7 +2,7 @@
 require('dotenv').config();
 const Hapi = require("hapi");
 const server = Hapi.server({
-  port: process.env.PORT ? process.env.port : 3000,
+  port: process.env.PORT ? process.env.PORT : 3000,
   host: "localhost"
 });
 require("./api")(server);
