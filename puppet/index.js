@@ -109,8 +109,24 @@ module.exports.sendMessage = async msg => {
         await page.waitForSelector("#input");
         console.log('i see input')
         await page.type("#input", msg);
-        await page.keyboard.press("Enter"); 
+        await page.keyboard.press("Enter");
         console.log('i pressed enter')
         return page.screenshot()
+    }
+    
+
+};
+
+module.exports.getScreenshot = async () => {
+    if (browserProcess && currentPage) {
+        const page = currentPage;
+        return page.screenshot()
+    }
+}
+
+module.exports.getHTML = async () => {
+    if (browserProcess && currentPage) {
+        const page = currentPage;
+        return await page.evaluate(() => document.body.innerHTML);
     }
 }
