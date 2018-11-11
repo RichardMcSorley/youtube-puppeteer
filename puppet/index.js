@@ -82,8 +82,8 @@ module.exports.startLiveChatProcess = async videoId => {
       currentPage = null
     await browserProcess.close();
   }
-    const browser = await puppeteer.launch({});
-    console.log('cool', browser)
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    console.log('cool')
   browserProcess = browser;
     const page = await browser.newPage();
     currentPage = page;
