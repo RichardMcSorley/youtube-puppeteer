@@ -1,0 +1,21 @@
+{
+  "name": "puppet-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "restart": "git pull origin master && sudo reboot"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "firebase": "^5.5.8",
+    "firebase-admin": "^6.1.0",
+    "hapi": "^17.7.0",
+    "nodemon": "^1.18.6",
+    "puppeteer": "^1.10.0"
+  }
+}
