@@ -92,6 +92,7 @@ module.exports.startLiveChatProcess = async videoId => {
     console.log('cool')
   browserProcess = browser;
     const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36')
     currentPage = page;
   await page.goto(`https://www.youtube.com/live_chat?v=${videoId}&is_popout=1`);
   const screenshot = await page.screenshot();
