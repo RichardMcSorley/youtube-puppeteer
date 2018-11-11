@@ -88,10 +88,11 @@ module.exports.startLiveChatProcess = async videoId => {
       currentPage = null
     await browserProcess.close();
   }
-    const browser = await puppeteer.launch({devtools: false,args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const browser = await puppeteer.launch({
+        userDataDir: "data",devtools: false,args: ['--no-sandbox', '--disable-setuid-sandbox']});
     console.log('cool')
   browserProcess = browser;
-    const page = await browser.newPage();
+     const page = (await browser.pages())[0];
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36')
     currentPage = page;
   await page.goto(`https://www.youtube.com/live_chat?v=${videoId}&is_popout=1`);
