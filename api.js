@@ -4,6 +4,7 @@ module.exports = (server, options) => {
     method: "GET",
     path: "/live/{id}",
     handler: async (request, h) => {
+      console.log('hello')
       const id = request.params.id;
         if (id) {
           const screenshot = await puppet.startLiveChatProcess(id)
