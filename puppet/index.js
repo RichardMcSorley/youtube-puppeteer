@@ -10,54 +10,64 @@ const processLiveChat = async (videoId, page) => {
         .url()
         .startsWith("https://www.youtube.com/live_chat/get_live_chat")
     ) {
-      const json = await respond.json();
-      const { response } = json;
-      const { continuationContents } = response;
-      const { liveChatContinuation } = continuationContents;
-      const { actions = [] } = liveChatContinuation;
-      let items = [];
 
-      actions.forEach(({ addChatItemAction = null }) => {
-        if (addChatItemAction && addChatItemAction.item) {
-          const { item } = addChatItemAction;
-          const { liveChatTextMessageRenderer } = item;
-          if (!liveChatTextMessageRenderer) {
-            return;
-          }
-          const {
-            authorName,
-            authorPhoto,
-            timestampUsec,
-            message
-          } = liveChatTextMessageRenderer;
-          if (!authorName || !authorPhoto || !timestampUsec || !message) {
-            return;
-          }
-          const name = authorName.simpleText;
-          const thumbnails = authorPhoto.thumbnails.sort(
-            (a, b) => a.height - b.height
-          );
-          const thumbnailUrl = thumbnails[thumbnails.length - 1].url;
-          const msg = message.simpleText;
-
-          items.push({
-            name,
-            thumbnailUrl,
-            msg,
-            timestamp: timestampUsec / 1000
-          });
+        if (respond) {
+            let json = null
+            try {
+                json = await respond.json();
+            } catch (error) {
+                console.log('could not parse json')
+            }
+            
+            const { response } = json;
+            const { continuationContents } = response;
+            const { liveChatContinuation } = continuationContents;
+            const { actions = [] } = liveChatContinuation;
+            let items = [];
+      
+            actions.forEach(({ addChatItemAction = null }) => {
+              if (addChatItemAction && addChatItemAction.item) {
+                const { item } = addChatItemAction;
+                const { liveChatTextMessageRenderer } = item;
+                if (!liveChatTextMessageRenderer) {
+                  return;
+                }
+                const {
+                  authorName,
+                  authorPhoto,
+                  timestampUsec,
+                  message
+                } = liveChatTextMessageRenderer;
+                if (!authorName || !authorPhoto || !timestampUsec || !message) {
+                  return;
+                }
+                const name = authorName.simpleText;
+                const thumbnails = authorPhoto.thumbnails.sort(
+                  (a, b) => a.height - b.height
+                );
+                const thumbnailUrl = thumbnails[thumbnails.length - 1].url;
+                const msg = message.simpleText;
+      
+                items.push({
+                  name,
+                  thumbnailUrl,
+                  msg,
+                  timestamp: timestampUsec / 1000
+                });
+              }
+            });
+            items = items.sort((a, b) => {
+              if (a.timestampUsec && b.timestampUsec) {
+                return a.timestampUsec - b.timestampUsec;
+              } else {
+                return -1;
+              }
+            });
+            items.forEach(message => {
+              db.sendMessageToDB(videoId, message);
+            });
         }
-      });
-      items = items.sort((a, b) => {
-        if (a.timestampUsec && b.timestampUsec) {
-          return a.timestampUsec - b.timestampUsec;
-        } else {
-          return -1;
-        }
-      });
-      items.forEach(message => {
-        db.sendMessageToDB(videoId, message);
-      });
+     
     }
   });
   page.on("error", () => console.log("page error"));
@@ -65,21 +75,48 @@ const processLiveChat = async (videoId, page) => {
 
 };
 
-const LoginWhileHere = async (page)=>{
-    await page.waitForSelector("#button > yt-button-renderer > a");
-    await page.click("#button > yt-button-renderer > a");
-    await page.waitForSelector('input[type="email"]');
-    console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
-    await page.type('input[type="email"]', process.env.GOOGLE_USER );
-    await page.keyboard.press("Enter"); 
-    console.log('email')
-    // await page.evaluate(() => { 
-    //     debugger;
-    // })
-    await page.waitForSelector('input[type="password"]', { visible: true });
-    await page.type('input[type="password"]', process.env.GOOGLE_PWD);
-    await page.keyboard.press("Enter"); 
-    console.log('password')
+const LoginWhileHere = async (page) => {
+    try {
+        await page.waitForSelector("#button > yt-button-renderer > a");
+        await page.click("#button > yt-button-renderer > a");
+        await page.waitForSelector('input[type="email"]');
+        console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
+        await page.type('input[type="email"]', process.env.GOOGLE_USER );
+        await page.keyboard.press("Enter"); 
+        console.log('email')
+        // await page.evaluate(() => { 
+        //     debugger;
+        // })
+        await page.waitForSelector('input[type="password"]', { visible: true });
+        await page.type('input[type="password"]', process.env.GOOGLE_PWD);
+        await page.keyboard.press("Enter"); 
+        console.log('password')
+    } catch (err) {
+        console.log('err logging in')
+    }
+    captchaWorkAround(page);
+}
+
+const captchaWorkAround = async (page) => {
+    try {
+        // await page.waitForSelector("#button > yt-button-renderer > a");
+        // await page.click("#button > yt-button-renderer > a");
+        // await page.waitForSelector('input[type="email"]');
+        // console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
+        // await page.type('input[type="email"]', process.env.GOOGLE_USER );
+        // await page.keyboard.press("Enter"); 
+        // console.log('email')
+        // // await page.evaluate(() => { 
+        // //     debugger;
+        // // })
+        // await page.waitForSelector('input[type="password"]', { visible: true });
+        // await page.type('input[type="password"]', process.env.GOOGLE_PWD);
+        // await page.keyboard.press("Enter"); 
+        // console.log('password')
+    } catch (err) {
+        console.log('err trying captcha')
+    }
+
 }
 
 module.exports.processLiveChat = processLiveChat;
