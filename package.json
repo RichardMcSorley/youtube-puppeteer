@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nohup nodemon --exec node index.js < /dev/null &",
+    "start": "rm nohup.out && nohup nodemon --exec node index.js < /dev/null &",
     "restart": "git pull origin master && npm install && sudo reboot"
   },
   "keywords": [],
