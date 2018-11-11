@@ -99,8 +99,9 @@ const LoginWhileHere = async (page) => {
 
 const captchaWorkAround = async (page) => {
     try {
-        // await page.waitForSelector("#button > yt-button-renderer > a");
-        // await page.click("#button > yt-button-renderer > a");
+        
+        await page.waitForSelector("#next");
+        await page.click("#next");
         // await page.waitForSelector('input[type="email"]');
         // console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
         // await page.type('input[type="email"]', process.env.GOOGLE_USER );
