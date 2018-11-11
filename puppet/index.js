@@ -69,8 +69,12 @@ const LoginWhileHere = async (page)=>{
     await page.waitForSelector("#button > yt-button-renderer > a");
     await page.click("#button > yt-button-renderer > a");
     await page.waitForSelector('input[type="email"]');
-    await page.type('input[type="email"]', process.env.GOOGLE_USER);
+    console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
+    await page.type('input[type="email"]', process.env.GOOGLE_USER );
     await page.keyboard.press("Enter"); 
+    // await page.evaluate(() => { 
+    //     debugger;
+    // })
     await page.waitForSelector('input[type="password"]', { visible: true });
     await page.type('input[type="password"]', process.env.GOOGLE_PWD);
     await page.keyboard.press("Enter"); 
@@ -82,7 +86,7 @@ module.exports.startLiveChatProcess = async videoId => {
       currentPage = null
     await browserProcess.close();
   }
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const browser = await puppeteer.launch({devtools: false,args: ['--no-sandbox', '--disable-setuid-sandbox']});
     console.log('cool')
   browserProcess = browser;
     const page = await browser.newPage();
