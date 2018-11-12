@@ -115,8 +115,9 @@ function getText(linkText) {
       const links = await page.$$('span')
     for (var i=0; i < links.length; i++) {
         let valueHandle = await links[i].getProperty('innerText');
-        console.log(valueHandle);
-      let linkText = await valueHandle.jsonValue();
+        
+        let linkText = await valueHandle.jsonValue();
+        console.log(linkText);
       const text = getText(linkText);
       if (linkString == text) {
         console.log(linkString);
