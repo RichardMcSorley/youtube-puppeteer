@@ -99,10 +99,11 @@ const LoginWhileHere = async (page) => {
 
 const captchaWorkAround = async (page) => {
     try {
-        
-        await page.evaluate(() => { 
-            document.querySelector("#next > content > span").click();
-        })
+        await page.mouse.click(533, 567)
+        console.log('clicked')
+        // await page.evaluate(() => { 
+        //     document.querySelector("#next > content > span").click();
+        // })
         // await page.waitForSelector("#next > content > span");
         // await page.click("#next > content > span");
         // await page.waitForSelector('input[type="email"]');
