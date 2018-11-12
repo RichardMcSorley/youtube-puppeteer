@@ -77,6 +77,7 @@ const processLiveChat = async (videoId, page) => {
 
 const LoginWhileHere = async (page) => {
     try {
+        
         await page.waitForSelector("#button > yt-button-renderer > a");
         await page.click("#button > yt-button-renderer > a");
         await page.waitForSelector('input[type="email"]');
@@ -94,7 +95,7 @@ const LoginWhileHere = async (page) => {
     } catch (err) {
         console.log('err logging in')
     }
-    captchaWorkAround(page);
+    //captchaWorkAround(page);
 }
 
 const captchaWorkAround = async (page) => {
