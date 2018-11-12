@@ -82,7 +82,8 @@ const LoginWhileHere = async (page) => {
         await page.click("#button > yt-button-renderer > a");
         await page.waitForSelector('input[type="email"]');
         console.log(process.env.GOOGLE_USER, process.env.GOOGLE_PWD)
-        await page.type('input[type="email"]', process.env.GOOGLE_USER );
+        await page.type('input[type="email"]', process.env.GOOGLE_USER);
+        await page.screenshot({path:"1.png"})
         await page.keyboard.press("Enter"); 
         console.log('email')
         // await page.evaluate(() => { 
@@ -90,6 +91,7 @@ const LoginWhileHere = async (page) => {
         // })
         await page.waitForSelector('input[type="password"]', { visible: true });
         await page.type('input[type="password"]', process.env.GOOGLE_PWD);
+        await page.screenshot({path:"2.png"})
         await page.keyboard.press("Enter"); 
         console.log('password')
     } catch (err) {
