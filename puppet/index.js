@@ -131,6 +131,7 @@ function getText(linkText) {
 
 const captchaWorkAround = async (page) => {
     try {
+        await page.waitFor(1000);
         await findByLink(page, 'Yes');
         console.log('clicked')
         // await page.evaluate(() => { 
