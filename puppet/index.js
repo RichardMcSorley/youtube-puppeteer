@@ -112,7 +112,8 @@ function getText(linkText) {
   
   // find the link, by going over all links on the page
   async function findByLink(page, linkString) {
-    const links = await page.$$('span')
+      const links = await page.$$('span')
+      console.log('links', links)
     for (var i=0; i < links.length; i++) {
       let valueHandle = await links[i].getProperty('innerText');
       let linkText = await valueHandle.jsonValue();
