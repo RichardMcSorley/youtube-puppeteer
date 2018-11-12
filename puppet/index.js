@@ -111,8 +111,8 @@ function getText(linkText) {
   }
   
   // find the link, by going over all links on the page
-  async function findByLink(page, linkString) {
-      const links = await page.$$('span')
+  async function findByLink(page, linkString, elm) {
+      const links = await page.$$(elm)
     for (var i=0; i < links.length; i++) {
         let valueHandle = await links[i].getProperty('innerText');
         
@@ -132,8 +132,12 @@ function getText(linkText) {
 const captchaWorkAround = async (page) => {
     try {
         await page.waitFor(1000);
-        await findByLink(page, 'Yes');
-        console.log('clicked')
+        const Yes = await findByLink(page, 'Yes', 'span');
+        if (Yes) {
+            console.log('trying to click')
+            await Yes.click()
+        }
+
         // await page.evaluate(() => { 
         //     document.querySelector("#next > content > span").click();
         // })
