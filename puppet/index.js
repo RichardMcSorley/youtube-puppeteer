@@ -97,7 +97,7 @@ const LoginWhileHere = async (page) => {
     } catch (err) {
         console.log('err logging in')
     }
-    //captchaWorkAround(page);
+    await captchaWorkAround(page);
 }
 
 const captchaWorkAround = async (page) => {
