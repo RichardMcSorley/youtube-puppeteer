@@ -6,6 +6,7 @@ const server = Hapi.server({
   port: process.env.PORT ? process.env.PORT : 3000,
   host: "localhost"
 });
+
 require("./api")(server);
 const init = async () => {
   await server.start();
