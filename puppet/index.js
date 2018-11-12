@@ -19,9 +19,9 @@ const processLiveChat = async (videoId, page) => {
                 console.log('could not parse json')
             }
             
-            const { response } = json;
-            const { continuationContents } = response;
-            const { liveChatContinuation } = continuationContents;
+            const { response = {} } = json;
+            const { continuationContents = {} } = response;
+            const { liveChatContinuation = {} } = continuationContents;
             const { actions = [] } = liveChatContinuation;
             let items = [];
       
