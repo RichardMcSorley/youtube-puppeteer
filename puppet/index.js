@@ -150,7 +150,7 @@ const startLiveChatProcess = async (videoId, isPost) => {
   }
   const browser = await puppeteer.launch({
     userDataDir: "data",
-    devtools: true,
+    devtools: false,
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
   browserProcess = browser;
