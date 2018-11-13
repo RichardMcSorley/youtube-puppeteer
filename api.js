@@ -4,7 +4,6 @@ module.exports = (server, options) => {
     method: "GET",
     path: "/live/{id}",
     handler: async (request, h) => {
-      console.log("hello");
       const id = request.params.id;
       if (id) {
         const screenshot = await puppet.startLiveChatProcess(id);
@@ -17,6 +16,17 @@ module.exports = (server, options) => {
       }
     }
   });
+  server.route({
+    method: "POST",
+    path: "/live/{id}",
+    handler: async (request, h) => {
+      return puppet.startLiveChatProcess(request.params.id, true).then((obj) => {
+         return obj;
+      }).catch((err) => {
+        return { error: err };
+      });
+    }
+  }); 
   server.route({
     method: "GET",
     path: "/live/message/{msg}",
@@ -33,6 +43,24 @@ module.exports = (server, options) => {
       }
     }
   });
+  server.route({
+    method: "GET",
+    path: "/messages",
+    handler: async (request, h) => {
+      return puppet.getMessages()
+    }
+  });
+  server.route({
+    method: "POST",
+    path: "/live/message",
+    handler: async (request, h) => {
+      return puppet.sendMessage(request.payload.message, true).then((bool) => {
+         return { message: bool };
+      }).catch((err) => {
+        return { err: err };
+      });
+    }
+  }); 
 
   server.route({
     method: "GET",
