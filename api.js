@@ -86,6 +86,7 @@ module.exports = (server, options) => {
     handler: async (request, h) => {
       const html = await puppet.getHTML();
       return html;
+      
     }
   });
 };
