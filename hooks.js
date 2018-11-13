@@ -1,4 +1,5 @@
-var gith = require("gith").create(6000); // run on port 6000
+const gith = require("gith").create(6000); // run on port 6000
+const exec = require('child_process').exec; 
 
 gith({
   repo: "RichardMcSorley/youtube-puppeteer" // the github-user/repo-name
