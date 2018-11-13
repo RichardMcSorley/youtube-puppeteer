@@ -78,7 +78,7 @@ const processLiveChat = async (videoId, page) => {
 
 const isLoggedIn = async page => {
   try {
-    const MyAvatar = await findByLink(page, "Korean Dictionary", "span");
+    const MyAvatar = await findByLink(page, "Korean Dictionary *", "span");
     console.log('trying to login')
     if (MyAvatar) {
       return { isLoggedIn: true }; // we are logged in
