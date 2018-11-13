@@ -6,10 +6,17 @@ gith({
 }).on("all", function(payload) {
   console.log("push received");
   exec('/root/puppet/scripts/hooks.sh ' + payload.branch, function (err, stdout, stderr) {
-    console.log('error', err)
-    console.log('stderr', stderr)
-    if (err) return err;
+    if (err) {
+      console.log('error', err)
+      console.log('stderr', stderr)
+      return err
+    };
+    if (stderr) {
+      console.log('stderr', stderr)
+      return stderr;
+    }
     console.log(stdout);
     console.log("git deployed to branch " + payload.branch);
+    //exec('systemctl restart hook@1') // nodemon will restart for us
   });
 });
