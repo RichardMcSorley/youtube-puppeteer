@@ -144,6 +144,8 @@ const captchaWorkAround = async page => {
 
 const startLiveChatProcess = async (videoId, isPost) => {
   if (browserProcess) {
+    await currentPage.removeListener('response', ()=>{});
+    await currentPage.removeListener('error', ()=>{});
     currentPage = null;
     await browserProcess.close();
     browserProcess = null;
