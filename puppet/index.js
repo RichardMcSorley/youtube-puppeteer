@@ -141,7 +141,7 @@ const captchaWorkAround = async page => {
   }
 };
 
-module.exports.startLiveChatProcess = async (videoId, isPost) => {
+const startLiveChatProcess = async (videoId, isPost) => {
   if (browserProcess) {
     currentPage = null;
     await browserProcess.close();
@@ -171,7 +171,7 @@ module.exports.startLiveChatProcess = async (videoId, isPost) => {
     return isLoggedIn(page);
   }
 };
-module.exports.sendMessage = async (msg, isPost) => {
+const sendMessage = async (msg, isPost) => {
   if (browserProcess && currentPage) {
     const page = currentPage;
     await page.waitForSelector("#input");
@@ -185,20 +185,29 @@ module.exports.sendMessage = async (msg, isPost) => {
   }
 };
 
-module.exports.getScreenshot = async () => {
+const getScreenshot = async () => {
   if (browserProcess && currentPage) {
     const page = currentPage;
     return page.screenshot();
   }
 };
 
-module.exports.getHTML = async () => {
+const getHTML = async () => {
   if (browserProcess && currentPage) {
     const page = currentPage;
     return await page.content();
   }
 };
 
-module.exports.getMessages = async () => {
+const getMessages = async () => {
   return globalItems;
 };
+
+
+module.exports = {
+    getScreenshot: getScreenshot,
+    getMessages: getMessages,
+    getHTML: getHTML,
+    sendMessage: sendMessage,
+    startLiveChatProcess: startLiveChatProcess
+}
