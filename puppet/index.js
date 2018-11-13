@@ -175,9 +175,13 @@ const startLiveChatProcess = async (videoId, isPost) => {
 const sendMessage = async (msg, isPost) => {
   if (browserProcess && currentPage) {
     const page = currentPage;
+    console.log('about to type')
     await page.waitForSelector("#input");
+    console.log('found the input')
     await page.type("#input", msg);
+    console.log('typed')
     await page.keyboard.press("Enter");
+    console.log('pressed enter')
     if (!isPost) {
       return await getScreenshot()
     } else {

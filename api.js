@@ -64,7 +64,7 @@ module.exports = (server, options) => {
       return puppet.sendMessage(request.payload.message, true).then((bool) => {
          return { message: bool };
       }).catch((err) => {
-        return { err: err };
+        return { error: err };
       });
     }
   }); 
@@ -86,7 +86,7 @@ module.exports = (server, options) => {
     handler: async (request, h) => {
       const html = await puppet.getHTML();
       return html;
-      
+
     }
   });
 };
