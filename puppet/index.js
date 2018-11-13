@@ -148,8 +148,8 @@ const startLiveChatProcess = async (videoId, isPost) => {
     browserProcess = null;
   }
   const browser = await puppeteer.launch({
-    userDataDir: "data4",
-    devtools: false,
+    userDataDir: "data",
+    devtools: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
   browserProcess = browser;
@@ -180,7 +180,7 @@ const sendMessage = async (msg, isPost) => {
     if (!isPost) {
       return await getScreenshot()
     } else {
-      return true;
+      return {message: msg};
     }
   }
 };
