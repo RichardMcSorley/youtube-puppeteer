@@ -4,7 +4,7 @@ gith({
   repo: "RichardMcSorley/youtube-puppeteer" // the github-user/repo-name
 }).on("all", function(payload) {
   console.log("push received");
-  exec('/root/puppet/hooks/hooks.sh ' + payload.branch, function(err, stdout, stderr){
+  exec('/root/puppet/hooks.sh ' + payload.branch, function(err, stdout, stderr){
     if (err) return err;
     console.log(stdout);
     console.log("git deployed to branch " + payload.branch);
