@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec node index.js",
-    "restart": "git pull origin master && npm install && sudo reboot"
+    "start": "nodemon node index.js",
+    "update": "git pull origin master && npm install && npm run start-server",
+    "start-server": "npm install && nodemon --exec node index.js"
   },
   "keywords": [],
   "author": "",
