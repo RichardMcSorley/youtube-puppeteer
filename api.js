@@ -17,6 +17,13 @@ module.exports = (server, options) => {
     }
   });
   server.route({
+    method: "GET",
+    path: "/",
+    handler: async (request, h) => {
+      return 'Running!'
+    }
+  });
+  server.route({
     method: "POST",
     path: "/live/{id}",
     handler: async (request, h) => {
