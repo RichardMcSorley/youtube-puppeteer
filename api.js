@@ -61,8 +61,8 @@ module.exports = (server, options) => {
     method: "POST",
     path: "/live/message",
     handler: async (request, h) => {
-      return puppet.sendMessage(request.payload.message, true).then((bool) => {
-         return { message: bool };
+      return puppet.sendMessage(request.payload.message, true).then((obj) => {
+         return obj;
       }).catch((err) => {
         return { error: err };
       });
