@@ -169,7 +169,7 @@ const startLiveChatProcess = async (videoId, isPost) => {
   if (!isPost) {
     return await getScreenshot()
   } else {
-    return isLoggedIn(page);
+    return await isLoggedIn(page);
   }
 };
 const sendMessage = async (msg, isPost) => {
