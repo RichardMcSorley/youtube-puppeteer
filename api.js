@@ -20,7 +20,7 @@ module.exports = (server, options) => {
     method: "GET",
     path: "/",
     handler: async (request, h) => {
-      return 'Running!'
+      return 'Running!@'
     }
   });
   server.route({
