@@ -6,9 +6,9 @@ cd /root/puppet
 
 git fetch --all
 
-git reset --hard 'origin/master'
+git reset --hard
 
-git pull 'origin' 'master'
+git pull
 
 # Remove NPM packages
 
