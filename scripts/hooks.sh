@@ -1,8 +1,21 @@
 #!/bin/sh
 
-git pull "origin" $1 #$1 is branch
+git fetch --all
 
-#rm -rf node_modules # remove any unwanted libraries
+git reset --hard origin/master
+
+git pull origin/master
+
+# Remove NPM packages
+ren package.json package.json-bak
+
+echo {} > package.json
+
+npm prune
+
+del package.json
+
+ren package.json-bak package.json
 
 npm install #install new npm libraries
 
