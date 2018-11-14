@@ -22,7 +22,7 @@ process.on("unhandledRejection", err => {
 process.on("SIGINT", () => {
   console.log("Closing server...");
   server.stop().then(async err => {
-    console.log("hapi server stopped");
+    console.log("hapi server stopped ");
     await browserProcess.close();
     process.exit(err ? 1 : 0);
   });
