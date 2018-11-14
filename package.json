@@ -1,5 +1,5 @@
 {
-  "name": "puppet-test",
+  "name": "puppet-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
