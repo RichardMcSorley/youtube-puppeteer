@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pm2 stop 1
+#pm2 stop 1
 
 cd /root/puppet
 
@@ -12,12 +12,12 @@ git pull
 
 # Remove NPM packages
 
-npm uninstall `ls -1 node_modules | tr '/\n' ' '`
+#npm uninstall `ls -1 node_modules | tr '/\n' ' '`
+#
+#rm -rf node_modules
 
-rm -rf node_modules
+#npm install #install new npm libraries
 
-npm install #install new npm libraries
-
-pm2 start 1
+#pm2 start 1
 
 return
