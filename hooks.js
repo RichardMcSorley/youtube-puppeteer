@@ -3,7 +3,7 @@ const exec = require("child_process").exec;
 gith({
   repo: "RichardMcSorley/youtube-puppeteer" // the github-user/repo-name
 }).on("all", function(payload) {
-  console.log("push received");
+  console.log("push received ");
   exec("sudo /root/puppet/scripts/hooks.sh " + payload.branch, function(
     err,
     stdout,
