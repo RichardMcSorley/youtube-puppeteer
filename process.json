@@ -4,7 +4,7 @@
       "name": "Git Hooks",
       "script": "hooks.js",
       "instances": 1,
-      "exec_mode": "cluster",
+      "exec_mode": "fork",
       "watch": ["hooks.js", "scripts"],
       "ignore_watch": ["data", "node_modules", ".git", "*.png"],
       "watch_options": {
@@ -15,7 +15,7 @@
       "name": "Puppeteer Server",
       "script": "index.js",
       "instances": 1,
-      "exec_mode": "cluster",
+      "exec_mode": "fork",
       "watch": true,
       "ignore_watch": [
         "data",
