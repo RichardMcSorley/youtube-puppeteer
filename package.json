@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2 start process.json --no-daemon --no-treekill --kill-timeout=60000",
-    "prod:start": "pm2 start process.json --no-daemon --no-treekill --kill-timeout=60000"
+    "prod:start": "pm2 start root/puppet/process.json --no-daemon --no-treekill --kill-timeout=60000"
   },
   "keywords": [],
   "author": "",
