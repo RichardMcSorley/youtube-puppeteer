@@ -2,7 +2,7 @@ const db = require("../firebase");
 const moment = require("moment");
 
 module.exports = async ({ id, page }) => {
-  let responses = respond => handleResponses(respond, id);
+  let responses = respond => handleResponses({ respond, id, page });
   let onError = e => console.log("page error", e);
   page.unsubscribeFromMyEvents = () => {
     page.removeListener("response", responses);
@@ -14,7 +14,7 @@ module.exports = async ({ id, page }) => {
   page.on("close", () => page.unsubscribeFromMyEvents());
 };
 
-const handleResponses = async (respond, id) => {
+const handleResponses = async ({ respond, id, page }) => {
   if (
     respond.url().startsWith("https://www.youtube.com/live_chat/get_live_chat")
   ) {

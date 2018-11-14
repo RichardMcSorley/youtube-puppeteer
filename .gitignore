@@ -9,6 +9,7 @@ nohup.out
 *data*
 data
 data1
+v8-compile*
 
 # Runtime data
 pids
