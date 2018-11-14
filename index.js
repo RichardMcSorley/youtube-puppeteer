@@ -21,16 +21,15 @@ process.on("unhandledRejection", err => {
 // Graceful shutdown
 process.on("SIGINT", () => {
   console.log("Closing server...");
-  server.close(async () => {
+  server.stop().then(function (err) {
+    console.log('hapi server stopped')
     await browserProcess.close();
-    console.log("Browser closed !!!");
-    console.log("Server closed !!! ");
-    process.exit();
-  });
+    process.exit((err) ? 1 : 0)
+  })
   // Force close server after 5secs
   setTimeout(e => {
     console.log("Forcing server close !!!", e);
     process.exit(1);
-  }, 5000);
+  }, 6000);
 });
 init();
