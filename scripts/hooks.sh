@@ -9,15 +9,7 @@ git pull origin/master
 
 # Remove NPM packages
 
-ren package.json package.json-bak
-
-echo {} > package.json
-
-npm prune
-
-del package.json
-
-ren package.json-bak package.json
+npm uninstall `ls -1 node_modules | tr '/\n' ' '`
 
 npm install #install new npm libraries
 
