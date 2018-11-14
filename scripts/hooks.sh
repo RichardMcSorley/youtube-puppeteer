@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pm2 stop all
+pm2 stop 1
 
 cd /root/puppet
 
@@ -18,6 +18,6 @@ rm -rf node_modules
 
 npm install #install new npm libraries
 
-pm2 start all
+pm2 start 1
 
 return
