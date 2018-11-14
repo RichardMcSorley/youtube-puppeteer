@@ -1,11 +1,9 @@
 #!/bin/sh
 
-systemctl stop puppet-nod@1 # force stop of service
-
 git pull "origin" $1 #$1 is branch
 
-npm install #install new npm libraries
+rm -rf node_modules # remove any unwanted libraries
 
-systemctl restart puppet-nod@1 # force restart of service
+npm install #install new npm libraries
 
 return

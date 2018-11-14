@@ -4,12 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon node index.js",
-    "update": "git pull origin master && npm install && npm run start-server",
-    "start:ci": "npm run pull && npm run install &&",
-    "install": "npm install",
-    "start-server": "nodemon --exec node index.js",
-    "hooks": "nodemon hooks.js"
+    "start": "pm2 start process.json --no-daemon --no-treekill --kill-timeout=60000"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +16,7 @@
     "gith": "^1.0.4",
     "hapi": "^17.7.0",
     "moment": "^2.22.2",
-    "nodemon": "^1.18.6",
+    "node-schedule": "^1.3.0",
     "puppeteer": "^1.10.0"
   }
 }

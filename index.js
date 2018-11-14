@@ -1,13 +1,13 @@
 "use strict";
-
-require('dotenv').config();
+require("dotenv").config();
 const Hapi = require("hapi");
 const server = Hapi.server({
-  port: process.env.PORT ? process.env.PORT : 3000,
+  port: process.env.PORT,
   host: "localhost"
 });
+const browserProcess = require("./puppet");
+require("./routes")(server); //setup routes
 
-require("./api")(server);
 const init = async () => {
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
@@ -16,5 +16,21 @@ const init = async () => {
 process.on("unhandledRejection", err => {
   console.log(err);
   process.exit(1);
+});
+
+// Graceful shutdown
+process.on("SIGINT", () => {
+  console.log("Closing server...");
+  server.close(async () => {
+    await browserProcess.close();
+    console.log("Browser closed !!!");
+    console.log("Server closed !!! ");
+    process.exit();
+  });
+  // Force close server after 5secs
+  setTimeout(e => {
+    console.log("Forcing server close !!!", e);
+    process.exit(1);
+  }, 5000);
 });
 init();

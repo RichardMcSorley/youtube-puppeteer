@@ -1,0 +1,33 @@
+{
+  "apps": [
+    {
+      "name": "Git Hooks",
+      "script": "hooks.js",
+      "instances": 1,
+      "exec_mode": "cluster",
+      "watch": ["hooks.js", "scripts"],
+      "ignore_watch": ["data", "node_modules", ".git", "*.png"],
+      "watch_options": {
+        "followSymlinks": false
+      }
+    },
+    {
+      "name": "Puppeteer Server",
+      "script": "index.js",
+      "instances": 1,
+      "exec_mode": "cluster",
+      "watch": true,
+      "ignore_watch": [
+        "data",
+        "node_modules",
+        ".git",
+        "*.png",
+        "hooks.js",
+        "scripts"
+      ],
+      "watch_options": {
+        "followSymlinks": false
+      }
+    }
+  ]
+}
