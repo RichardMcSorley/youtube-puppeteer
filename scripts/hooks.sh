@@ -1,4 +1,5 @@
 #!/bin/sh
+cd /root/puppet
 
 git fetch --all
 
@@ -7,6 +8,7 @@ git reset --hard origin/master
 git pull origin/master
 
 # Remove NPM packages
+
 ren package.json package.json-bak
 
 echo {} > package.json
