@@ -8,7 +8,7 @@ module.exports = (server, options) => {
     method: "GET",
     path: "/",
     handler: async () => {
-      return `${appInfo.name}`;
+      return `${appInfo.name} v${appInfo.version}`;
     }
   });
   routes.forEach(route => server.route(route));
