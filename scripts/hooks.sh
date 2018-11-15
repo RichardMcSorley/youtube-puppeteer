@@ -12,7 +12,7 @@ git pull
 
 # Remove NPM packages
 
-#npm uninstall `ls -1 node_modules | tr '/\n' ' '`
+npm uninstall `ls -1 node_modules | tr '/\n' ' '`
 #
 
 rm -rf node_modules
