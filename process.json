@@ -1,19 +1,6 @@
 {
   "apps": [
     {
-      "name": "Git Hooks",
-      "script": "hooks.js",
-      "instances": 1,
-      "watch": ["hooks.js", "scripts"],
-      "ignore_watch": ["data", "node_modules", ".git", "*.png"],
-      "watch_options": {
-        "followSymlinks": false
-      },
-      "env": {
-        "FORCE_INSPECTOR": 1
-      }
-    },
-    {
       "name": "Puppeteer Server",
       "script": "index.js",
       "instances": 1,

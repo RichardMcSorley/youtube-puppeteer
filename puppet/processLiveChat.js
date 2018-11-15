@@ -75,8 +75,8 @@ const handleResponses = async ({ respond, id, page }) => {
       });
       items.forEach(message => {
         db.sendMessageToDB(message);
-        page.timestamp = moment().format();
       });
+      page.timestamp = moment().format();
     }
   }
 };

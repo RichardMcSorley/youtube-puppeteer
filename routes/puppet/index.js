@@ -21,5 +21,14 @@ module.exports = [
       const html = await puppet.getHTML({ id });
       return html;
     }
+  },
+
+  {
+    method: "GET",
+    path: "/inspect",
+    handler: async request => {
+      const html = await puppet.getInspect();
+      return html;
+    }
   }
 ];

@@ -18,6 +18,11 @@
     "hapi": "^17.7.0",
     "moment": "^2.22.2",
     "node-schedule": "^1.3.0",
-    "puppeteer": "^1.10.0"
+    "puppeteer": "^1.10.0",
+    "puppeteer-extra": "^2.1.1",
+    "puppeteer-extra-plugin-anonymize-ua": "^2.1.1",
+    "puppeteer-extra-plugin-block-resources": "^2.1.1",
+    "puppeteer-extra-plugin-devtools": "^2.1.1",
+    "puppeteer-extra-plugin-stealth": "^2.1.1"
   }
 }

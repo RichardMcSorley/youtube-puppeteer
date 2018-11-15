@@ -1,10 +1,47 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
 const processLiveChat = require("./processLiveChat");
 const pageUtils = require("../utils/page");
 const moment = require("moment");
 const schedule = require("node-schedule");
-// caching for when I dont know my process id
+const devtools = require("puppeteer-extra-plugin-devtools")();
+const DEVTOOLS_PORT = "5000";
+devtools.setAuthCredentials("bob", "swordfish");
+puppeteer.use(devtools);
+puppeteer.use(require("puppeteer-extra-plugin-stealth")());
+puppeteer.use(
+  require("puppeteer-extra-plugin-block-resources")({
+    blockedTypes: new Set([
+      "image",
+      "stylesheet",
+      "font",
+      "media",
+      "texttrack",
+      "manifest"
+    ])
+  })
+);
 let browserProcess = null;
+const getBrowser = async () => {
+  try {
+    if (browserProcess) {
+      return browserProcess;
+    }
+    browserProcess = await puppeteer.launch({
+      userDataDir: "data",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        `--remote-debugging-port=${DEVTOOLS_PORT}`
+      ]
+    });
+    return browserProcess;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// caching for when I dont know my page id
+browserProcess = getBrowser();
 let openPages = {};
 
 const isLoggedIn = async ({ page, shouldScreenshot = false }) => {
@@ -16,10 +53,8 @@ const isLoggedIn = async ({ page, shouldScreenshot = false }) => {
       elm: "span"
     });
     if (MyAvatar) {
-      console.log("Logged in already");
       return { isLoggedIn: true }; // we are logged in already
     } else {
-      console.log("not logged in.. trying now...");
     }
     let isChatDisabled = await pageUtils.findByElm({
       page,
@@ -55,10 +90,8 @@ const isLoggedIn = async ({ page, shouldScreenshot = false }) => {
       elm: "span"
     });
     if (MyAvatar) {
-      console.log("Logged in!");
       return { isLoggedIn: true }; // we are logged in already
     } else {
-      console.log("Failed Login");
       return { isLoggedIn: false, error: "Couldn't see my Avatar!" }; // we are logged in already
     }
   } catch (err) {
@@ -93,22 +126,6 @@ const startLiveChatProcess = async ({ id }) => {
   }
 };
 
-const getBrowser = async ({ devtools = false }) => {
-  try {
-    if (browserProcess) {
-      return browserProcess;
-    }
-    browserProcess = await puppeteer.launch({
-      userDataDir: "data",
-      devtools,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    });
-    return browserProcess;
-  } catch (error) {
-    return { error };
-  }
-};
-
 const getPage = async ({ id, url }) => {
   try {
     if (browserProcess && id in openPages) {
@@ -117,24 +134,6 @@ const getPage = async ({ id, url }) => {
     openPages[id] = await browserProcess.newPage();
     const page = openPages[id];
     page.timestamp = moment().format();
-    //set user agent
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-    );
-    // disable images
-    await page.setRequestInterception(true);
-    page.on("request", request => {
-      switch (request.resourceType()) {
-        case "image":
-          return request.abort();
-        case "stylesheet":
-          return request.abort();
-        case "font":
-          return request.abort();
-        default:
-          return request.continue();
-      }
-    });
     // got to URL
     await page.goto(url);
     return page;
@@ -189,16 +188,20 @@ const getHTML = async ({ id }) => {
   }
 };
 
-module.exports = {
-  getScreenshot: getScreenshot,
-  getHTML: getHTML,
-  sendMessage: sendMessage,
-  startLiveChatProcess: startLiveChatProcess,
-  browserProcess: browserProcess
+const getInspect = async () => {
+  if ("inspect" in openPages) {
+    return await openPages.inspect.content();
+  } else {
+    const page = await getPage({
+      id: "inspect",
+      url: "http://localhost:" + DEVTOOLS_PORT
+    });
+    return await page.content();
+  }
 };
 
 const closeLongRunningTasks = async () => {
-  // close page if open longer than an hour without updates
+  // close page if open longer than an hour without updates, also close browser if no pages
   const pageIds = Object.keys(openPages);
   let amountOfPageIds = pageIds.length;
   pageIds.forEach(async pageId => {
@@ -218,6 +221,7 @@ const closeLongRunningTasks = async () => {
     if (browserProcess) {
       console.log("closing browser");
       await browserProcess.close();
+      browserProcess = null;
     }
   }
 };
@@ -235,3 +239,12 @@ const run = () => {
   everyMin();
 };
 run();
+
+module.exports = {
+  getScreenshot: getScreenshot,
+  getHTML: getHTML,
+  sendMessage: sendMessage,
+  startLiveChatProcess: startLiveChatProcess,
+  browserProcess: browserProcess,
+  getInspect: getInspect
+};
