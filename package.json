@@ -1,7 +1,7 @@
 {
   "name": "puppet-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "A service to stream youtube live chat messages",
   "main": "index.js",
   "scripts": {
     "start": "pm2 start process.json --no-daemon --no-treekill --kill-timeout=60000",
