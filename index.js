@@ -1,5 +1,6 @@
 "use strict";
 require("dotenv").config();
+const MessageQ = require("./firebase").queue;
 const Hapi = require("hapi");
 const server = Hapi.server({
   port: process.env.PORT,
@@ -25,6 +26,7 @@ process.on("SIGINT", () => {
     console.log("hapi server stopped ");
     if (browserProcess) {
       await browserProcess.close();
+      await MessageQ.shutdown();
     }
     process.exit(err ? 1 : 0);
   });

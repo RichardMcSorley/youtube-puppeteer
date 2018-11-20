@@ -51,6 +51,9 @@ const handleResponses = async ({ respond, id, page }) => {
             return;
           }
           const name = authorName.simpleText;
+          if (name === "Korean Dictionary *") {
+            return;
+          }
           const thumbnails = authorPhoto.thumbnails.sort(
             (a, b) => a.height - b.height
           );
