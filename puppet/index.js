@@ -5,6 +5,7 @@ const moment = require("moment");
 const schedule = require("node-schedule");
 const devtools = require("puppeteer-extra-plugin-devtools")();
 const DEVTOOLS_PORT = "5000";
+const sendingMessage = false;
 devtools.setAuthCredentials("bob", "swordfish");
 puppeteer.use(devtools);
 puppeteer.use(require("puppeteer-extra-plugin-stealth")());
@@ -148,13 +149,20 @@ const getPage = async ({ id, url }) => {
 };
 
 const sendMessage = async ({ message, id }) => {
+  if (sendingMessage) return;
   // live chat message
+  if (message.length > 197) {
+    message = message.substring(0, 197);
+    message = message + "...";
+  }
   try {
     if (id in openPages) {
+      sendingMessage = true;
       const page = openPages[id];
       await page.waitForSelector("#input");
       await page.type("#input", message);
       await page.keyboard.press("Enter");
+      sendingMessage = false;
       return { message: message };
     } else {
       if (!browserProcess) {
@@ -165,9 +173,11 @@ const sendMessage = async ({ message, id }) => {
         url: `https://www.youtube.com/live_chat?v=${id}&is_popout=1`
       });
       await processLiveChat({ id, page: newPage });
+      sendingMessage = false;
       return await sendMessage({ message, id });
     }
   } catch (error) {
+    sendingMessage = false;
     return { error };
   }
 };
