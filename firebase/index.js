@@ -1,22 +1,17 @@
 const firebase = require("./firebase");
 const db = firebase.database;
 const moment = require("moment");
-const livechatRef =
-  process.env.NODE_ENV === "production"
-    ? "livechat/tasks"
-    : "TEST/livechat/tasks";
+const livechatRef = "livechat/tasks";
 const Queue = require("firebase-queue");
-const puppetDBResource =
-  process.env.NODE_ENV === "development"
-    ? `TEST/livechat/puppet`
-    : "livechat/puppet";
-const { sendMessage } = require("../puppet");
+const puppetDBResource = "livechat/puppet";
+const { sendMessage, startLiveChatProcess } = require("../puppet");
 module.exports.sendMessageToDB = async ({
   name = "",
   thumbnailUrl = "",
   msg = "",
   timestampUsec = 0,
-  videoId = ""
+  videoId = "",
+  ...rest
 }) => {
   const ref = await db.ref(livechatRef);
   const key = await ref.push().key;
@@ -26,16 +21,28 @@ module.exports.sendMessageToDB = async ({
     content: msg,
     timestampUsec,
     videoId,
-    timestamp: moment().format()
+    timestamp: moment().format(),
+    ...rest
   });
 };
-const queue = new Queue(
-  db.ref(puppetDBResource),
+module.exports.updatePage = async ({
+  id,
+  liveChatTextMessageRenderer,
+  liveChatPaidMessageRenderer
+}) => {
+  const ref = await db.ref(puppetDBResource + "/pages/" + id);
+  const key = await ref.push().key;
+  ref
+    .child(key)
+    .update({ liveChatTextMessageRenderer, liveChatPaidMessageRenderer });
+};
+const videoQ = new Queue(
+  db.ref(puppetDBResource + "/video"),
   { sanitize: false, suppressStack: true },
   (data, progress, resolve, reject) => {
     progress("picked up");
-    return processChat(data, progress).then(() => {
-      progress("should have finished");
+    return processVideo(data, progress).then(() => {
+      progress("finished");
       return db
         .ref(puppetDBResource)
         .child(data._id)
@@ -45,8 +52,30 @@ const queue = new Queue(
     });
   }
 );
-module.exports.queue = queue;
+const messageQ = new Queue(
+  db.ref(puppetDBResource),
+  { sanitize: false, suppressStack: true },
+  (data, progress, resolve, reject) => {
+    progress("picked up");
+    return processChat(data, progress).then(() => {
+      progress("finished");
+      return db
+        .ref(puppetDBResource)
+        .child(data._id)
+        .remove()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+);
+module.exports.videoQ = videoQ;
+module.exports.messageQ = messageQ;
 const processChat = async data => {
   const { payload, videoId } = data;
   await sendMessage({ message: payload, id: videoId });
+};
+const processVideo = async data => {
+  const { videoId } = data;
+  console.log("connecting");
+  await startLiveChatProcess({ id: videoId });
 };

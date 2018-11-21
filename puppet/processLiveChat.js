@@ -28,6 +28,8 @@ const handleResponses = async ({ respond, id, page }) => {
       if (!json) {
         return null;
       }
+      let = liveChatTextMessageRenderer = null
+      let = liveChatPaidMessageRenderer = null
       const { response = {} } = json;
       const { continuationContents = {} } = response;
       const { liveChatContinuation = {} } = continuationContents;
@@ -37,7 +39,11 @@ const handleResponses = async ({ respond, id, page }) => {
       actions.forEach(({ addChatItemAction = null }) => {
         if (addChatItemAction && addChatItemAction.item) {
           const { item } = addChatItemAction;
-          const { liveChatTextMessageRenderer } = item;
+          if(item.liveChatPaidMessageRenderer){
+            liveChatPaidMessageRenderer = item.liveChatPaidMessageRenderer;
+          }if(item.liveChatTextMessageRenderer){
+            liveChatTextMessageRenderer = item.liveChatTextMessageRenderer;
+          }
           if (!liveChatTextMessageRenderer) {
             return;
           }
@@ -45,11 +51,17 @@ const handleResponses = async ({ respond, id, page }) => {
             authorName,
             authorPhoto,
             timestampUsec,
-            message
+            message,
+            authorBadges = []
           } = liveChatTextMessageRenderer;
           if (!authorName || !authorPhoto || !timestampUsec || !message) {
             return;
           }
+          const roles = authorBadges.map(badge => {
+            const { liveChatAuthorBadgeRenderer } = badge;
+            const { icon } = liveChatAuthorBadgeRenderer;
+            return icon.iconType;
+          });
           const name = authorName.simpleText;
           if (name === "Korean Dictionary *") {
             return;
@@ -65,7 +77,8 @@ const handleResponses = async ({ respond, id, page }) => {
             thumbnailUrl,
             msg,
             timestampUsec,
-            videoId: id
+            videoId: id,
+            roles
           });
         }
       });
@@ -79,7 +92,18 @@ const handleResponses = async ({ respond, id, page }) => {
       items.forEach(message => {
         db.sendMessageToDB(message);
       });
+      if (!liveChatPaidMessageRenderer) {
+        liveChatPaidMessageRenderer = null;
+      }
+      if (!liveChatTextMessageRenderer) {
+        liveChatTextMessageRenderer = null;
+      }
       page.timestamp = moment().format();
+      db.updatePage({
+        liveChatTextMessageRenderer,
+        liveChatPaidMessageRenderer,
+        id
+      });
     }
   }
 };
