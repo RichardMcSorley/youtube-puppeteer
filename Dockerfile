@@ -32,7 +32,7 @@ EXPOSE 6000 8080
 # Install Puppeteer under /node_modules so it's available system-wide
 ADD . /
 
-RUN pm2 --no-daemon process.json --kill-timeout=60000
+RUN pm2 process.json --kill-timeout=60000
 
 #docker build -t puppeteer:0.1 .
 #docker run -dit --restart always puppeteer:0.1 -p 8080:8800 -p 6000:6000
