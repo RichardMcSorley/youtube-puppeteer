@@ -30,6 +30,8 @@ EXPOSE 8080
 # Install Puppeteer under /node_modules so it's available system-wide
 ADD . /
 
+RUN npm i
+
 RUN npm start
 
 #docker build -t puppeteer:0.1 .
