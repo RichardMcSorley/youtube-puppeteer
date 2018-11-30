@@ -4,7 +4,7 @@
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
 FROM node:10.14.0-slim@sha256:5aaef0bf16a700696c76e0902241aef6f4067e7e13255bddab835080b4a8ed1b
-ENV DEBUG="*"
+
 RUN  apt-get update \
      # See https://crbug.com/795759
      && apt-get install -yq libgconf-2-4 \
@@ -24,15 +24,13 @@ RUN npm config set loglevel warn \
     && npm config set only production \
     && npm config set progress false 
 
-RUN npm install -g pm2@1.1.3
-
 # Expose ports
-EXPOSE 6000 8080
+EXPOSE 8080
 
 # Install Puppeteer under /node_modules so it's available system-wide
 ADD . /
 
-RUN pm2 process.json --kill-timeout=60000
+RUN npm start
 
 #docker build -t puppeteer:0.1 .
-#docker run -dit --restart always puppeteer:0.1 -p 8080:8800 -p 6000:6000
+#docker run -dit --restart always puppeteer:0.1 -p 8080:8800
