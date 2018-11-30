@@ -4,8 +4,8 @@
   "description": "A service to stream youtube live chat messages",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start process.json --no-daemon --no-treekill --kill-timeout=60000",
-    "prod:start": "pm2 start process.json --no-treekill --kill-timeout=60000"
+    "start": "node index.js",
+    "hooks": "node hooks.js"
   },
   "keywords": [],
   "author": "",

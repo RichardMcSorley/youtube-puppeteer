@@ -57,11 +57,11 @@ const handleResponses = async ({ respond, id, page }) => {
           if (!authorName || !authorPhoto || !timestampUsec || !message) {
             return;
           }
-          const roles = authorBadges.map(badge => {
-            const { liveChatAuthorBadgeRenderer } = badge;
-            const { icon } = liveChatAuthorBadgeRenderer;
-            return icon.iconType;
-          });
+          // const roles = authorBadges.map(badge => {
+          //   const { liveChatAuthorBadgeRenderer } = badge;
+          //   const { icon } = liveChatAuthorBadgeRenderer;
+          //   return icon.iconType;
+          // });
           const name = authorName.simpleText;
           if (name === "Korean Dictionary *") {
             return;
@@ -78,7 +78,7 @@ const handleResponses = async ({ respond, id, page }) => {
             msg,
             timestampUsec,
             videoId: id,
-            roles
+            // roles
           });
         }
       });

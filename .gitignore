@@ -10,6 +10,7 @@ nohup.out
 data
 data1
 v8-compile*
+.vscode
 
 # Runtime data
 pids
