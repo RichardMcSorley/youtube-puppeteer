@@ -32,7 +32,7 @@ ADD . /
 
 RUN npm i
 
-RUN npm start
+CMD ["npm", "start"]
 
 #docker build -t puppeteer:0.1 .
 #docker run -dit --restart always puppeteer:0.1 -p 8080:8800
