@@ -4,7 +4,7 @@
   "description": "A service to stream youtube live chat messages",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"node hooks.js\" \"nodemon index.js\""
+    "start": "concurrently \"sh hooks.sh\" \"node hooks.js\" \"nodemon index.js\""
   },
   "keywords": [],
   "author": "",

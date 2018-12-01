@@ -20,6 +20,9 @@ WORKDIR /app
 
 COPY . .
 
+# pull latest code
+RUN sh hooks.sh master
+
 RUN chmod +x hooks.js
 
 RUN npm install
