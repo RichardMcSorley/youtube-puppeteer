@@ -1,12 +1,10 @@
 #!/bin/sh
 
-echo 'Got command to pull from ' $1
-
 git fetch --all
 
 git reset --hard
 
-git pull $1
+git pull origin $1
 
 # Remove NPM packages
 
