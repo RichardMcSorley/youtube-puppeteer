@@ -5,6 +5,6 @@ services:
     build: .
     ports:
       - "3000:3000"
-      - "5000:5000"
+      - "6000:6000"
     restart: always
     container_name: puppeteer_server
