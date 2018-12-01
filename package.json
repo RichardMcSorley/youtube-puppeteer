@@ -4,7 +4,7 @@
   "description": "A service to stream youtube live chat messages",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"sh hooks.sh\" \"node hooks.js\" \"nodemon index.js\""
+    "start": "concurrently \"node hooks.js\" \"nodemon index.js\""
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,6 @@
     "puppeteer-extra": "^2.1.1",
     "puppeteer-extra-plugin-anonymize-ua": "^2.1.1",
     "puppeteer-extra-plugin-block-resources": "^2.1.1",
-    "puppeteer-extra-plugin-devtools": "^2.1.1",
     "puppeteer-extra-plugin-stealth": "^2.1.1"
   }
 }

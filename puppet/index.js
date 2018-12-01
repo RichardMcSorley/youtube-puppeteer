@@ -3,10 +3,7 @@ const processLiveChat = require("./processLiveChat");
 const pageUtils = require("../utils/page");
 const moment = require("moment");
 const schedule = require("node-schedule");
-//const devtools = require("puppeteer-extra-plugin-devtools")();
 const DEVTOOLS_PORT = "5000";
-//devtools.setAuthCredentials("bob", "swordfish");
-//puppeteer.use(devtools);
 puppeteer.use(require("puppeteer-extra-plugin-stealth")());
 puppeteer.use(
   require("puppeteer-extra-plugin-block-resources")({
@@ -35,8 +32,6 @@ const getBrowser = async () => {
         `--remote-debugging-port=${DEVTOOLS_PORT}`
       ]
     });
-    // const tunnel = await devtools.createTunnel(browserProcess);
-    //console.log("tunnel:", tunnel.url);
     return browserProcess;
   } catch (error) {
     return { error };
@@ -228,7 +223,6 @@ const closeLongRunningTasks = async () => {
     if (browserProcess) {
       console.log("closing browser");
       await browserProcess.close();
-      browserProcess = null;
     }
   }
 };

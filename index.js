@@ -25,7 +25,7 @@ const gShutdown = eventType => {
   console.log("Closing server...");
   server.stop().then(async _ => {
     console.log("hapi server stopped ");
-    if (browserProcess && browserProcess.hasOwnProperty("close")) {
+    if (browserProcess && (await browserProcess.process())) {
       await browserProcess.close();
     }
     await MessageQ.shutdown();
