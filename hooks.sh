@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#pm2 stop 1
+echo '$1 = ' $1
 
 git fetch --all
 
@@ -11,7 +11,5 @@ git pull
 # Remove NPM packages
 
 npm install #install new npm libraries
-
-#pm2 start 1 
 
 return
