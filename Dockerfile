@@ -24,7 +24,7 @@ RUN chmod +x hooks.js
 
 RUN npm install
 
-EXPOSE 3000 6000
+EXPOSE 3000 6000 5000
 
 CMD ["npm", "start"]
 

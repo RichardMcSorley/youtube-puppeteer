@@ -4,11 +4,7 @@ gith({
   repo: "RichardMcSorley/youtube-puppeteer" // the github-user/repo-name
 }).on("all", function(payload) {
   console.log("push received ");
-  exec(". /root/puppet/scripts/hooks.sh " + payload.branch, function(
-    err,
-    stdout,
-    stderr
-  ) {
+  exec(". /app/hooks.sh " + payload.branch, function(err, stdout, stderr) {
     if (err) {
       console.log("error", err);
       console.log("stderr", stderr);
@@ -19,7 +15,7 @@ gith({
       return stderr;
     }
     console.log(stdout);
-    console.log("git deployed");
+    console.log("Deployed!");
     //exec('systemctl restart hook@1') // nodemon will restart for us
   });
 });
