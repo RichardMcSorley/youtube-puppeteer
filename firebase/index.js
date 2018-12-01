@@ -30,11 +30,12 @@ module.exports.updatePage = async ({
   liveChatTextMessageRenderer,
   liveChatPaidMessageRenderer
 }) => {
-  const ref = await db.ref(puppetDBResource + "/pages/" + id);
-  const key = await ref.push().key;
-  ref
-    .child(key)
-    .update({ liveChatTextMessageRenderer, liveChatPaidMessageRenderer });
+  //temporarily disable for now
+  // const ref = await db.ref(puppetDBResource + "/pages/" + id);
+  // const key = await ref.push().key;
+  // ref
+  //   .child(key)
+  //   .update({ liveChatTextMessageRenderer, liveChatPaidMessageRenderer });
 };
 const videoQ = new Queue(
   db.ref(puppetDBResource + "/video"),
