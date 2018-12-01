@@ -3,8 +3,7 @@ require("dotenv").config();
 const MessageQ = require("./firebase").queue;
 const Hapi = require("hapi");
 const server = Hapi.server({
-  port: process.env.PORT,
-  host: "localhost"
+  port: 3000
 });
 const browserProcess = require("./puppet");
 require("./routes")(server); //setup routes
@@ -20,20 +19,23 @@ process.on("unhandledRejection", err => {
 });
 
 // Graceful shutdown
-process.on("SIGINT", () => {
+process.on("SIGINT", () => gShutdown("SIGINT"));
+
+const gShutdown = eventType => {
   console.log("Closing server...");
-  server.stop().then(async err => {
+  server.stop().then(async _ => {
     console.log("hapi server stopped ");
-    if (browserProcess) {
+    if (browserProcess && browserProcess.hasOwnProperty("close")) {
       await browserProcess.close();
-      await MessageQ.shutdown();
     }
-    process.exit(err ? 1 : 0);
+    await MessageQ.shutdown();
+    process.kill(process.pid, eventType);
   });
-  // Force close server after 5secs
+  // Force close server after 6secs
   setTimeout(e => {
     console.log("Forcing server close !!!", e);
-    process.exit(1);
+    process.kill(process.pid, eventType);
   }, 6000);
-});
+};
+
 init();

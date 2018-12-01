@@ -19,7 +19,7 @@ gith({
       return stderr;
     }
     console.log(stdout);
-    console.log("git deployed to branch " + payload.branch);
+    console.log("git deployed");
     //exec('systemctl restart hook@1') // nodemon will restart for us
   });
 });

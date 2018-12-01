@@ -2,8 +2,6 @@
 
 #pm2 stop 1
 
-cd /root/puppet
-
 git fetch --all
 
 git reset --hard

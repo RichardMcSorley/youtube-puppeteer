@@ -30,8 +30,8 @@ const getBrowser = async () => {
       userDataDir: "data",
       args: [
         "--no-sandbox",
-        "--disable-dev-shm-usage",
         "--disable-setuid-sandbox",
+        "--enable-logging', '--v=1",
         `--remote-debugging-port=${DEVTOOLS_PORT}`
       ]
     });
