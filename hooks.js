@@ -4,7 +4,7 @@ gith({
   repo: "RichardMcSorley/youtube-puppeteer" // the github-user/repo-name
 }).on("all", function(payload) {
   console.log("push received ");
-  exec("pwd" + payload.branch, function(err, stdout, stderr) {
+  exec("pwd", function(err, stdout, stderr) {
     if (err) {
       console.log("error", err);
       console.log("stderr", stderr);
