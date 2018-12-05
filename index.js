@@ -3,7 +3,7 @@ require("dotenv").config();
 const MessageQ = require("./firebase").queue;
 const Hapi = require("hapi");
 const server = Hapi.server({
-  port: 3000
+  port: 8080
 });
 const browserProcess = require("./puppet");
 require("./routes")(server); //setup routes
