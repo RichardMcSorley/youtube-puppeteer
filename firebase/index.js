@@ -40,17 +40,16 @@ module.exports.updatePage = async ({
 const videoQ = new Queue(
   db.ref(puppetDBResource + "/video"),
   { sanitize: false, suppressStack: true },
-  (data, progress, resolve, reject) => {
+  async (data, progress, resolve, reject) => {
     progress("picked up");
-    return processVideo(data, progress).then(() => {
-      progress("finished");
-      return db
-        .ref(puppetDBResource)
-        .child(data._id)
-        .remove()
-        .then(resolve)
-        .catch(reject);
-    });
+    await processVideo(data, progress);
+    progress("finished");
+    return db
+      .ref(puppetDBResource)
+      .child(data._id)
+      .remove()
+      .then(resolve)
+      .catch(reject);
   }
 );
 const messageQ = new Queue(

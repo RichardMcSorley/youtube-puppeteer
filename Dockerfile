@@ -14,12 +14,10 @@ ENV LANG="C.UTF-8"
 WORKDIR /app
 # copy over everything
 COPY . .
-# prepare hooks
-RUN chmod +x hooks.sh
 # install latest packages
 RUN npm i
 # 3000 index.js 6000 hooks.js 5000 inpsector
-EXPOSE 3000 6000 5000
+EXPOSE 3000
 # Run this script, when we compose up
 CMD ["npm", "start"]
 # docker build -t puppeteer:0.2 . or docker-compose build

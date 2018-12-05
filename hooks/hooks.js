@@ -16,7 +16,6 @@ gith({
     }
     console.log(stdout);
     console.log("Deployed!");
-    //exec('systemctl restart hook@1') // nodemon will restart for us
   });
 });
-console.log("Hooks is listening on port: 6000 ");
+console.log("Hooks is listening on port: 6000");

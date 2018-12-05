@@ -221,7 +221,7 @@ const closeLongRunningTasks = async () => {
   if (amountOfPageIds === 0) {
     // no pages open!
     if (browserProcess) {
-      console.log("closing browser");
+      console.log("Closing Browser!");
       await browserProcess.close();
     }
   }

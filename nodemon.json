@@ -1,4 +1,0 @@
-{
-  "ignore": ["data/*", "*.png", ".git/*", "hooks.js", "scripts/*"],
-  "delay": "60000"
-}

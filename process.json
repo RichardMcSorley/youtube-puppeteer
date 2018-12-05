@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "Puppeteer Server",
+      "script": "index.js",
+      "instances": 1,
+      "watch": true,
+      "ignore_watch": [
+        "data",
+        "node_modules",
+        ".git",
+        "*.png",
+        "hooks.js",
+        "scripts"
+      ],
+      "watch_options": {
+        "followSymlinks": false
+      }
+    }
+  ]
+}
